@@ -1,4 +1,4 @@
-#include"Fiber.h"
+#include"fiber.h"
 
 namespace mycoroutine{
 
@@ -70,7 +70,7 @@ public:
         if ((m_state == TERM || m_state == INIT) && m_stack){
             m_cb = cb;
             getcontext(&m_ctx);
-            m_ctx.uc_link = nullptr;
+            m_ctx.uc_link = &t_mainfiber->m_ctx;
             m_ctx.uc_stack.ss_sp = m_stack;
             m_ctx.uc_stack.ss_size = m_stacksize;
             makecontext(&m_ctx, &Fiber::MainFunc, 0);
@@ -104,6 +104,12 @@ public:
         return t_mainfiber;
     };
 
+    uint64_t Fiber::GetFiberId(){
+        if (t_fiber){
+            return t_fiber->m_id;
+        }
+    }
+
     void Fiber::YieldToHold(){
         if (t_fiber) {
             t_fiber->m_state = HOLD;
@@ -121,10 +127,10 @@ public:
     };
     void Fiber::MainFunc(){
         if (t_fiber) {
-            std::function<void()> cb = nullptr;
-            cb.swap(t_fiber->m_cb);
-            cb();
+            t_fiber->m_cb();
+            t_fiber->m_cb = nullptr;
             t_fiber->m_state = TERM;
+            t_fiber->swapOut();
         }
         else std::cerr << "Not in child fiber!" << std::endl;
     };

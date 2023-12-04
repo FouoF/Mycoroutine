@@ -32,6 +32,7 @@ public:
     //current fiber operations
     //TODO: SetThis to private or delete
     static void SetThis(std::shared_ptr<Fiber>);
+    static uint64_t GetFiberId();
     static std::shared_ptr<Fiber> GetThis();
     static void YieldToHold();
     static void YieldToReady();
