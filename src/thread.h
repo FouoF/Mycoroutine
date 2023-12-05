@@ -14,22 +14,62 @@ namespace mycoroutine{
 class Semaphore{
 public:
     Semaphore(uint32_t count = 0);
+    ~Semaphore();
     void wait();
     void notify();
 private:
     sem_t m_semaphore;
 };
 
+class Mutex{
+public:
+    Mutex(){
+        pthread_mutex_init(&m_lock, NULL);
+    };
+    ~Mutex(){
+        pthread_mutex_destroy(&m_lock);
+    };
+    void lock(){
+        pthread_mutex_lock(&m_lock);
+    };
+    void unlock(){
+        pthread_mutex_unlock(&m_lock);
+    };
+private:
+    pthread_mutex_t m_lock;
+};
+
+class RWMutex{
+public:
+    RWMutex(){
+        pthread_rwlock_init(&m_lock, NULL);
+    };
+    ~RWMutex(){
+        pthread_rwlock_destroy(&m_lock);
+    };
+    void rdlock(){
+        pthread_rwlock_rdlock(&m_lock);
+    };
+    void wrlock(){
+        pthread_rwlock_wrlock(&m_lock);
+    };
+    void unlock(){
+        pthread_rwlock_unlock(&m_lock);
+    };
+private:
+    pthread_rwlock_t m_lock;
+};
+
 class MutexLock{
 public: 
-    MutexLock(Mutex& mutex) : m_mutex(mutex){
+    MutexLock(mycoroutine::Mutex& mutex) : m_mutex(mutex){
         m_mutex.lock();
         m_locked = true;
-    }
+    };
 
     ~MutexLock(){
         unlock();
-    }
+    };
 
     void lock(){
         if (!m_locked){
@@ -45,7 +85,7 @@ public:
         }
     };
 private:
-    Mutex& m_mutex;
+    mycoroutine::Mutex& m_mutex;
     bool m_locked;
 };
 
@@ -54,11 +94,11 @@ public:
     ReadLock(RWMutex& mutex) : m_mutex(mutex){
         m_mutex.rdlock();
         m_locked = true;
-    }
+    };
 
     ~ReadLock(){
         unlock();
-    }
+    };
 
     void lock(){
         if (!m_locked){
@@ -81,17 +121,17 @@ private:
 class WrLock{
 public: 
     WrLock(RWMutex& mutex) : m_mutex(mutex){
-        m_mutex.Wrlock();
+        m_mutex.wrlock();
         m_locked = true;
-    }
+    };
 
     ~WrLock(){
         unlock();
-    }
+    };
 
     void lock(){
         if (!m_locked){
-            m_mutex.Wrlock();
+            m_mutex.wrlock();
             m_locked = true;
         }
     };
@@ -105,45 +145,6 @@ public:
 private:
     RWMutex& m_mutex;
     bool m_locked;
-};
-
-class Mutex{
-public:
-    Mutex(){
-        pthread_mutex_init(&m_lock, NULL);
-    }
-    ~Mutex(){
-        pthread_mutex_destroy(&m_lock);
-    }
-    void lock(){
-        pthread_mutex_lock(&m_lock);
-    }
-    void unlock(){
-        pthread_mutex_unlock(&m_lock);
-    }
-private:
-    pthread_mutex_t m_lock;
-};
-
-class RWMutex{
-public:
-    RWMutex(){
-        pthread_rwlock_init(&m_lock, NULL);
-    }
-    ~RWMutex(){
-        pthread_rwlock_destroy(&m_lock);
-    }
-    void rdlock(){
-        pthread_rwlock_rdlock(&m_lock);
-    }
-    void wrlock(){
-        pthread_rwlock_wrlock(&m_lock);
-    }
-    void unlock(){
-        pthread_rwlock_unlock(&m_lock);
-    }
-private:
-    pthread_rwlock_t m_lock;
 };
 
 class Thread:noncopyable

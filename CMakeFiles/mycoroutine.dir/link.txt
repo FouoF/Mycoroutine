@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC  -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function  -shared -Wl,-soname,libmycoroutine.so -o lib/libmycoroutine.so CMakeFiles/mycoroutine.dir/src/fiber.cpp.o CMakeFiles/mycoroutine.dir/src/thread.cpp.o   -L/home/poff/Desktop/Mycoroutine/lib 

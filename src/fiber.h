@@ -6,12 +6,14 @@
 #include<functional>
 #include<atomic>
 
-#include"Thread.h"
+#include"thread.h"
 
 namespace mycoroutine{
 
 class Fiber : std::enable_shared_from_this<Fiber>{
 public:
+    Fiber();
+    ~Fiber();
     enum State{
         HOLD,
         TERM,
@@ -19,9 +21,11 @@ public:
         READY,
         EXEC,
     };
-    static std::shared_ptr<Fiber> mainInit(){};
+    static std::shared_ptr<Fiber> mainInit();
 
     static std::shared_ptr<Fiber> create(std::function<void()> cb, size_t stacksize);
+
+    Fiber(std::function<void()> cb, size_t stacksize);
     
     std::shared_ptr<Fiber> getShared(){
         return shared_from_this();
@@ -39,16 +43,12 @@ public:
     static void YieldToReady();
     static void MainFunc();
 private:
-    Fiber();
-    Fiber(std::function<void()> cb, size_t stacksize);
-    ~Fiber();
-
-    uint64_t m_id;
-    uint32_t m_stacksize;
+    std::function<void()> m_cb = nullptr;
+    uint64_t m_id = 0;
+    uint32_t m_stacksize = 0;
     ucontext_t m_ctx;
     State m_state;
     void * m_stack = nullptr;
-    std::function<void()> m_cb;
 };
 }
 

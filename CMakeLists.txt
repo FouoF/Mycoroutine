@@ -5,6 +5,8 @@ project(Mycoroutine)
 set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_FLAGS "$ENV{CXXFLAGS} -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function")
 
+MESSAGE(STATUS "Project: SERVER")
+
 include_directories(.)
 include_directories(${PROJECT_SOURCE_DIR}/src)
 link_directories(${PROJECT_SOURCE_DIR}/lib)

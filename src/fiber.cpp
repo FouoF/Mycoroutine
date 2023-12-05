@@ -54,14 +54,14 @@ public:
             if (m_state == INIT || m_state == TERM){
                 StackAllocator::Dealloc(m_stack);
                 if (t_fiber == getShared()){
-                    t_fiber == nullptr;
+                    t_fiber = nullptr;
                 }
             }
             else std::cerr << "Fiber " << m_id << " destruct at wrong state!" << std::endl;
         }
         //destruct main Fiber
         else {
-            if (t_fiber == getShared()) t_fiber == nullptr;
+            if (t_fiber == getShared()) t_fiber = nullptr;
             if (t_mainfiber == getShared()) t_mainfiber = nullptr;
         }
     }
@@ -108,7 +108,8 @@ public:
         if (t_fiber){
             return t_fiber->m_id;
         }
-    }
+        return -1;
+    };
 
     void Fiber::YieldToHold(){
         if (t_fiber) {
