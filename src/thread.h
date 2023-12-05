@@ -20,13 +20,99 @@ private:
     sem_t m_semaphore;
 };
 
+class MutexLock{
+public: 
+    MutexLock(Mutex& mutex) : m_mutex(mutex){
+        m_mutex.lock();
+        m_locked = true;
+    }
+
+    ~MutexLock(){
+        unlock();
+    }
+
+    void lock(){
+        if (!m_locked){
+            m_mutex.lock();
+            m_locked = true;
+        }
+    };
+
+    void unlock(){
+        if (m_locked){
+            m_mutex.unlock();
+            m_locked = false;
+        }
+    };
+private:
+    Mutex& m_mutex;
+    bool m_locked;
+};
+
+class ReadLock{
+public: 
+    ReadLock(RWMutex& mutex) : m_mutex(mutex){
+        m_mutex.rdlock();
+        m_locked = true;
+    }
+
+    ~ReadLock(){
+        unlock();
+    }
+
+    void lock(){
+        if (!m_locked){
+            m_mutex.rdlock();
+            m_locked = true;
+        }
+    };
+
+    void unlock(){
+        if (m_locked){
+            m_mutex.unlock();
+            m_locked = false;
+        }
+    };
+private:
+    RWMutex& m_mutex;
+    bool m_locked;
+};
+
+class WrLock{
+public: 
+    WrLock(RWMutex& mutex) : m_mutex(mutex){
+        m_mutex.Wrlock();
+        m_locked = true;
+    }
+
+    ~WrLock(){
+        unlock();
+    }
+
+    void lock(){
+        if (!m_locked){
+            m_mutex.Wrlock();
+            m_locked = true;
+        }
+    };
+
+    void unlock(){
+        if (m_locked){
+            m_mutex.unlock();
+            m_locked = false;
+        }
+    };
+private:
+    RWMutex& m_mutex;
+    bool m_locked;
+};
+
 class Mutex{
 public:
     Mutex(){
         pthread_mutex_init(&m_lock, NULL);
     }
     ~Mutex(){
-        pthread_mutex_unlock(&m_lock);
         pthread_mutex_destroy(&m_lock);
     }
     void lock(){
