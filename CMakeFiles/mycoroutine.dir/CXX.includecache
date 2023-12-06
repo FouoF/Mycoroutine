@@ -6,10 +6,6 @@
 
 #IncludeRegexTransform: 
 
-/home/poff/Desktop/Mycoroutine/src/fiber.cpp
-fiber.h
-/home/poff/Desktop/Mycoroutine/src/fiber.h
-
 /home/poff/Desktop/Mycoroutine/src/fiber.h
 ucontext.h
 -
@@ -23,6 +19,24 @@ thread.h
 /home/poff/Desktop/Mycoroutine/src/thread.h
 
 /home/poff/Desktop/Mycoroutine/src/noncopyable.h
+
+/home/poff/Desktop/Mycoroutine/src/scheduler.cpp
+scheduler.h
+/home/poff/Desktop/Mycoroutine/src/scheduler.h
+util.h
+/home/poff/Desktop/Mycoroutine/src/util.h
+
+/home/poff/Desktop/Mycoroutine/src/scheduler.h
+memory
+-
+vector
+-
+list
+-
+thread.h
+/home/poff/Desktop/Mycoroutine/src/thread.h
+fiber.h
+/home/poff/Desktop/Mycoroutine/src/fiber.h
 
 /home/poff/Desktop/Mycoroutine/src/thread.cpp
 thread.h

@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/mycoroutine.dir/src/fiber.cpp.o"
+  "CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o"
   "CMakeFiles/mycoroutine.dir/src/thread.cpp.o"
   "lib/libmycoroutine.pdb"
   "lib/libmycoroutine.so"

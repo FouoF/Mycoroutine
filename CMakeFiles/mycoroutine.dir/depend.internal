@@ -6,6 +6,13 @@ CMakeFiles/mycoroutine.dir/src/fiber.cpp.o
  /home/poff/Desktop/Mycoroutine/src/fiber.h
  /home/poff/Desktop/Mycoroutine/src/noncopyable.h
  /home/poff/Desktop/Mycoroutine/src/thread.h
+CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o
+ /home/poff/Desktop/Mycoroutine/src/fiber.h
+ /home/poff/Desktop/Mycoroutine/src/noncopyable.h
+ /home/poff/Desktop/Mycoroutine/src/scheduler.cpp
+ /home/poff/Desktop/Mycoroutine/src/scheduler.h
+ /home/poff/Desktop/Mycoroutine/src/thread.h
+ /home/poff/Desktop/Mycoroutine/src/util.h
 CMakeFiles/mycoroutine.dir/src/thread.cpp.o
  /home/poff/Desktop/Mycoroutine/src/fiber.h
  /home/poff/Desktop/Mycoroutine/src/noncopyable.h

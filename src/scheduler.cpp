@@ -1,4 +1,5 @@
 #include"scheduler.h"
+#include"util.h"
 
 namespace mycoroutine{
 
@@ -6,7 +7,7 @@ static thread_local std::shared_ptr<Scheduler> t_scheduler = nullptr;
 //the main fiber executing the scheduler
 static thread_local std::shared_ptr<Fiber> t_fiber = nullptr;
 
-Scheduler::Scheduler(size_t thread_num = 1, bool use_caller = true, std::string name = "DEFAULT") : m_name(name){
+Scheduler::Scheduler(size_t thread_num, bool use_caller, std::string name) : m_name(name){
     if (use_caller){
         m_mainfiber = mycoroutine::Fiber::GetThis();
         thread_num--;
@@ -20,8 +21,8 @@ Scheduler::Scheduler(size_t thread_num = 1, bool use_caller = true, std::string 
     }
     m_threadCount = thread_num;
 }; 
-virtual Scheduler::~Scheduler(){
-    if (t_scheduler.get() = this) 
+Scheduler::~Scheduler(){
+    if (t_scheduler.get() == this) 
     t_scheduler = nullptr;
 };
 
@@ -29,7 +30,7 @@ std::shared_ptr<Scheduler> Scheduler::GetThis(){
     return t_scheduler;
 };
 std::shared_ptr<Fiber> Scheduler::GetMainFiber(){
-    return m_mainfiber;
+    return Fiber::GetThis();
 };
 
 void Scheduler::start(){
@@ -49,14 +50,15 @@ void Scheduler::start(){
 void Scheduler::stop(){
     m_autoStop = true;
     //the scheduler is ready to stop
-    if (m_mainfiber && m_threadCount = 0 
-    && (m_mainfiber->getState() == Fiber::TERM || m_mainfiber->getState() == Fiber::INIT)){
+    if (m_mainfiber && m_threadCount == 0 
+    && (m_mainfiber->getState() == Fiber::TERM 
+    || m_mainfiber->getState() == Fiber::INIT)){
         m_stopping = true;
         if (stopping()){
             return; 
     }
     }
-    bool exit_on_this_fiber = false;
+//    bool exit_on_this_fiber = false;
     m_stopping = true;
     for (size_t i = 0; i < m_threadCount; i ++){
         tickle();
@@ -89,7 +91,7 @@ void Scheduler::run(){
                     need_tickle = true;
                     continue;
                 }
-                if (it->fiber && it->fiber->getState == Fiber::EXEC){
+                if (it->fiber && it->fiber->getState() == Fiber::EXEC){
                     ++it;
                     continue;
                 }
@@ -104,7 +106,7 @@ void Scheduler::run(){
             --m_activeThreadCount;
             //consider the state after swapout [READY, HOLD, TERM]
             if (ft.fiber->getState() == Fiber::READY) schedule(ft.fiber);
-            else ft.fiber->m_state = Fiber::HOLD;
+            else ft.fiber->setState(Fiber::HOLD);
             ft.reset();
         }
         //the param is a function
@@ -119,7 +121,7 @@ void Scheduler::run(){
                 schedule(shared_fiber);
             }
             else if (cb_fiber->getState() == Fiber::TERM){
-                cb_fiber->m_state = Fiber::HOLD;
+                cb_fiber->setState(Fiber::HOLD);
             }
             cb_fiber->reset(nullptr);
         }
@@ -131,5 +133,6 @@ void Scheduler::run(){
             }
             --m_idelThreadCount;
         }
+}
 }
 }

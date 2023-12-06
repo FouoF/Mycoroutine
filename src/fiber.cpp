@@ -109,7 +109,7 @@ public:
         else return MainInit();
     };
 
-    uint64_t Fiber::GetFiberId(){
+    uint64_t Fiber::GetThisFiberId(){
         if (t_fiber){
             return t_fiber->m_id;
         }

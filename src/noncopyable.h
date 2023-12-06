@@ -1,5 +1,5 @@
-#ifndef _NONCOPYABLE_H
-#define _NONCOPYABLE_H
+#ifndef _MYCOROUTINE_NONCOPYABLE_H
+#define _MYCOROUTINE_NONCOPYABLE_H
 
 namespace mycoroutine
 {

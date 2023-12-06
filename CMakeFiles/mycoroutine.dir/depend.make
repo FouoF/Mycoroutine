@@ -6,6 +6,13 @@ CMakeFiles/mycoroutine.dir/src/fiber.cpp.o: src/fiber.h
 CMakeFiles/mycoroutine.dir/src/fiber.cpp.o: src/noncopyable.h
 CMakeFiles/mycoroutine.dir/src/fiber.cpp.o: src/thread.h
 
+CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o: src/fiber.h
+CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o: src/noncopyable.h
+CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o: src/scheduler.cpp
+CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o: src/scheduler.h
+CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o: src/thread.h
+CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o: src/util.h
+
 CMakeFiles/mycoroutine.dir/src/thread.cpp.o: src/fiber.h
 CMakeFiles/mycoroutine.dir/src/thread.cpp.o: src/noncopyable.h
 CMakeFiles/mycoroutine.dir/src/thread.cpp.o: src/thread.cpp

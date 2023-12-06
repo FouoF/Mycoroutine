@@ -7,7 +7,6 @@
 
 #include"thread.h"
 #include"fiber.h"
-#include"util.h"
 
 namespace mycoroutine{
 
@@ -47,18 +46,18 @@ public:
 protected:
     virtual void tickle();
     void run();
-    virtual void stopping();
+    virtual bool stopping();
     virtual void idel();
-private :
+private:
     template<class FiberOrCb>
-    scheduleNolock(FiberOrCb fc, int thread){
+    bool scheduleNolock(FiberOrCb fc, int thread){
         bool need_tickle = m_fibers.empty();
         FiberAndThread ft(fc, thread);
         if (ft.cb || ft.fiber){
             m_fibers.push_back(ft);            
         }
         return need_tickle;
-    }
+    };
 private:
     struct FiberAndThread{
         std::shared_ptr<Fiber> fiber;
@@ -72,7 +71,7 @@ private:
             cb = nullptr;
             thread = -1;
         }
-    }
+    };
 private:
     myMutex m_mutex = myMutex();
     std::shared_ptr<Fiber> m_mainfiber;
@@ -88,7 +87,7 @@ protected:
     bool m_stopping = true;
     bool m_autoStop = false;
     pid_t m_rootThread = 0;
-}
+};
 }
 
 #endif

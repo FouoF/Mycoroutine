@@ -29,10 +29,13 @@ public:
     
     std::shared_ptr<Fiber> getShared(){
         return shared_from_this();
-    }
+    };
     State getState(){
         return m_state;
-    }
+    };
+    void setState(State state){
+        m_state = state;
+    };
     //reset the task of the fiber
     void reset(std::function<void()> cb); 
     void swapIn();
@@ -40,7 +43,7 @@ public:
     //current fiber operations
     //TODO: SetThis to private or delete
     static void SetThis(std::shared_ptr<Fiber>);
-    static uint64_t GetFiberId();
+    static uint64_t GetThisFiberId();
     static std::shared_ptr<Fiber> GetThis();
     static void YieldToHold();
     static void YieldToReady();

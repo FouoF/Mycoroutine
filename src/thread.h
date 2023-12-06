@@ -1,5 +1,5 @@
-#ifndef _THREAD_H_
-#define _THREAD_H_
+#ifndef _MYCOROUTINE_THREAD_H_
+#define _MYCOROUTINE_THREAD_H_
 
 #include<thread>
 #include<functional>
