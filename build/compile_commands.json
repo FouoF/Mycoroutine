@@ -13,5 +13,10 @@
   "directory": "/home/poff/Desktop/Mycoroutine/build",
   "command": "/usr/bin/c++  -Dmycoroutine_EXPORTS -I/home/poff/Desktop/Mycoroutine/. -I/home/poff/Desktop/Mycoroutine/src   -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function -g -fPIC   -o CMakeFiles/mycoroutine.dir/src/thread.cpp.o -c /home/poff/Desktop/Mycoroutine/src/thread.cpp",
   "file": "/home/poff/Desktop/Mycoroutine/src/thread.cpp"
+},
+{
+  "directory": "/home/poff/Desktop/Mycoroutine/build",
+  "command": "/usr/bin/c++  -Dmycoroutine_EXPORTS -I/home/poff/Desktop/Mycoroutine/. -I/home/poff/Desktop/Mycoroutine/src   -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function -g -fPIC   -o CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o -c /home/poff/Desktop/Mycoroutine/src/scheduler.cpp",
+  "file": "/home/poff/Desktop/Mycoroutine/src/scheduler.cpp"
 }
 ]

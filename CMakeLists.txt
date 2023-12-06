@@ -14,6 +14,7 @@ link_directories(${PROJECT_SOURCE_DIR}/lib)
 set(LIB_SRC
     src/fiber.cpp
     src/thread.cpp
+    src/scheduler.cpp
 )
 
 add_library(mycoroutine SHARED ${LIB_SRC})

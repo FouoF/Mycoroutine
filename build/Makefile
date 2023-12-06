@@ -166,6 +166,33 @@ src/fiber.cpp.s:
 	$(MAKE) -f CMakeFiles/mycoroutine.dir/build.make CMakeFiles/mycoroutine.dir/src/fiber.cpp.s
 .PHONY : src/fiber.cpp.s
 
+src/scheduler.o: src/scheduler.cpp.o
+
+.PHONY : src/scheduler.o
+
+# target to build an object file
+src/scheduler.cpp.o:
+	$(MAKE) -f CMakeFiles/mycoroutine.dir/build.make CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o
+.PHONY : src/scheduler.cpp.o
+
+src/scheduler.i: src/scheduler.cpp.i
+
+.PHONY : src/scheduler.i
+
+# target to preprocess a source file
+src/scheduler.cpp.i:
+	$(MAKE) -f CMakeFiles/mycoroutine.dir/build.make CMakeFiles/mycoroutine.dir/src/scheduler.cpp.i
+.PHONY : src/scheduler.cpp.i
+
+src/scheduler.s: src/scheduler.cpp.s
+
+.PHONY : src/scheduler.s
+
+# target to generate assembly for a file
+src/scheduler.cpp.s:
+	$(MAKE) -f CMakeFiles/mycoroutine.dir/build.make CMakeFiles/mycoroutine.dir/src/scheduler.cpp.s
+.PHONY : src/scheduler.cpp.s
+
 src/thread.o: src/thread.cpp.o
 
 .PHONY : src/thread.o
@@ -233,6 +260,9 @@ help:
 	@echo "... src/fiber.o"
 	@echo "... src/fiber.i"
 	@echo "... src/fiber.s"
+	@echo "... src/scheduler.o"
+	@echo "... src/scheduler.i"
+	@echo "... src/scheduler.s"
 	@echo "... src/thread.o"
 	@echo "... src/thread.i"
 	@echo "... src/thread.s"

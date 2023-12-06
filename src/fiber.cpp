@@ -17,20 +17,18 @@ public:
         free(vp);
     }
 };
-    std::shared_ptr<Fiber> Fiber::mainInit(){
+    std::shared_ptr<Fiber> Fiber::MainInit(){
         std::shared_ptr<Fiber> ret = std::make_shared<Fiber>();
         t_mainfiber = ret;
         return ret;
     }
 
-    std::shared_ptr<Fiber> Fiber::create(std::function<void()> cb, size_t stacksize){
+    std::shared_ptr<Fiber> Fiber::Create(std::function<void()> cb, size_t stacksize){
         return std::make_shared<Fiber>(cb, stacksize);
     }
 
     Fiber::Fiber(){
         m_state = INIT;
-        getcontext(&m_ctx);
-        m_state = EXEC;
     }
 
     Fiber::Fiber(std::function<void()> cb, size_t stacksize)
@@ -76,6 +74,11 @@ public:
             makecontext(&m_ctx, &Fiber::MainFunc, 0);
             m_state = INIT;
         }
+        else if ((m_state == INIT)){
+            m_cb = cb;
+            getcontext(&m_ctx);
+            m_ctx.uc_link = nullptr;
+        }
     };
 
     void Fiber::swapIn(){
@@ -97,11 +100,13 @@ public:
         t_fiber = p;
     };
 
+    //if the thread has no main fiber, GetThis() will create one automatically
     std::shared_ptr<Fiber> Fiber::GetThis(){
         if (t_fiber)
         return t_fiber;
-        else
+        else if (t_mainfiber)
         return t_mainfiber;
+        else return MainInit();
     };
 
     uint64_t Fiber::GetFiberId(){
@@ -126,6 +131,7 @@ public:
         }
         else std::cerr << "Not in child fiber!" << std::endl;
     };
+
     void Fiber::MainFunc(){
         if (t_fiber) {
             t_fiber->m_cb();

@@ -21,14 +21,17 @@ public:
         READY,
         EXEC,
     };
-    static std::shared_ptr<Fiber> mainInit();
+    static std::shared_ptr<Fiber> MainInit();
 
-    static std::shared_ptr<Fiber> create(std::function<void()> cb, size_t stacksize);
+    static std::shared_ptr<Fiber> Create(std::function<void()> cb, size_t stacksize);
 
     Fiber(std::function<void()> cb, size_t stacksize);
     
     std::shared_ptr<Fiber> getShared(){
         return shared_from_this();
+    }
+    State getState(){
+        return m_state;
     }
     //reset the task of the fiber
     void reset(std::function<void()> cb); 

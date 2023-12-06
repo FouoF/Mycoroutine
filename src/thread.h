@@ -21,12 +21,12 @@ private:
     sem_t m_semaphore;
 };
 
-class Mutex{
+class myMutex{
 public:
-    Mutex(){
+    myMutex(){
         pthread_mutex_init(&m_lock, NULL);
     };
-    ~Mutex(){
+    ~myMutex(){
         pthread_mutex_destroy(&m_lock);
     };
     void lock(){
@@ -62,7 +62,7 @@ private:
 
 class MutexLock{
 public: 
-    MutexLock(mycoroutine::Mutex& mutex) : m_mutex(mutex){
+    MutexLock(myMutex& mutex) : m_mutex(mutex){
         m_mutex.lock();
         m_locked = true;
     };
@@ -85,7 +85,7 @@ public:
         }
     };
 private:
-    mycoroutine::Mutex& m_mutex;
+    myMutex& m_mutex;
     bool m_locked;
 };
 

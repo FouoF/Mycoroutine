@@ -7,10 +7,11 @@
 
 #include"thread.h"
 #include"fiber.h"
+#include"util.h"
 
 namespace mycoroutine{
 
-class Scheduler{
+class Scheduler : std::enable_shared_from_this<Scheduler>{
 public:
     Scheduler(size_t thread_num = 1, bool use_caller = true, std::string name = "DEFAULT"); 
     virtual ~Scheduler();
@@ -36,7 +37,7 @@ public:
     template<class InputItrator>
     void schedule(InputItrator begin, InputItrator end){
         bool need_tickle = false;
-        MutexLock lock(&m_mutex);
+        MutexLock lock(m_mutex);
         while(begin != end){
             need_tickle = scheduleNolock(*begin) || need_tickle;
             begin ++;
@@ -44,7 +45,10 @@ public:
         if (need_tickle) tickle();
     }
 protected:
-    void tickle();
+    virtual void tickle();
+    void run();
+    virtual void stopping();
+    virtual void idel();
 private :
     template<class FiberOrCb>
     scheduleNolock(FiberOrCb fc, int thread){
@@ -70,12 +74,20 @@ private:
         }
     }
 private:
-    Scheduler() = default;
-    mycoroutine::Mutex m_mutex = Mutex();
-    std::shared_ptr<Fiber> fiber;
+    myMutex m_mutex = myMutex();
+    std::shared_ptr<Fiber> m_mainfiber;
     std::string m_name;
-    std::vector<Thread> m_threads;
+    std::vector<std::shared_ptr<Thread> > m_threads;
     std::list<FiberAndThread> m_fibers;
+protected:
+    //mappping thread_id and index
+    std::vector<pid_t> m_threadIds;
+    size_t m_threadCount = 0;
+    size_t m_activeThreadCount = 0;
+    size_t m_idelThreadCount = 0;
+    bool m_stopping = true;
+    bool m_autoStop = false;
+    pid_t m_rootThread = 0;
 }
 }
 
