@@ -49,14 +49,8 @@ Thread::Thread(std::function<void()> cb, std::string name){
 };
 
 void Thread::join(){
-    if (m_thread) {
-       if(pthread_join(m_thread, nullptr)) std::cerr << "join failed!" << std::endl;
-    }
+    if(pthread_join(m_thread, nullptr)) std::cerr << "join failed!" << std::endl;
 }
-Thread::~Thread(){
-    if (m_thread) pthread_detach(m_thread);
-}
-
 void * Thread::run(void * arg){
     Thread * thread = (Thread *)arg;
     t_thread = thread;

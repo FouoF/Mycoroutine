@@ -10,7 +10,7 @@
 
 namespace mycoroutine{
 
-class Scheduler : std::enable_shared_from_this<Scheduler>{
+class Scheduler : public std::enable_shared_from_this<Scheduler>{
 public:
     Scheduler(size_t thread_num = 1, bool use_caller = true, std::string name = "DEFAULT"); 
     virtual ~Scheduler();

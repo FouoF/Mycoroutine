@@ -1,0 +1,1 @@
+/usr/bin/c++   -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function -g  -rdynamic CMakeFiles/test_fiber.dir/tests/test_fiber.cpp.o  -o ../bin/test_fiber   -L/home/poff/Desktop/Mycoroutine/lib  -Wl,-rpath,/home/poff/Desktop/Mycoroutine/lib ../lib/libmycoroutine.so -lpthread 

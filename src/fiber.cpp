@@ -17,7 +17,9 @@ public:
         free(vp);
     }
 };
+    //only one main fiber can exist
     std::shared_ptr<Fiber> Fiber::MainInit(){
+        if (t_mainfiber) return t_mainfiber;
         std::shared_ptr<Fiber> ret = std::make_shared<Fiber>();
         t_mainfiber = ret;
         return ret;
@@ -39,7 +41,7 @@ public:
         m_state = INIT;
         m_stack = StackAllocator::Alloc(m_stacksize);
         getcontext(&m_ctx);
-        m_ctx.uc_link = nullptr;
+        m_ctx.uc_link = &t_mainfiber->m_ctx;
         m_ctx.uc_stack.ss_sp = m_stack;
         m_ctx.uc_stack.ss_size = m_stacksize;
         makecontext(&m_ctx, &Fiber::MainFunc, 0);
@@ -51,16 +53,15 @@ public:
         if (m_stack){
             if (m_state == INIT || m_state == TERM){
                 StackAllocator::Dealloc(m_stack);
-                if (t_fiber == getShared()){
-                    t_fiber = nullptr;
-                }
             }
-            else std::cerr << "Fiber " << m_id << " destruct at wrong state!" << std::endl;
+            else {
+                std::cerr << "Fiber " << m_id << " destruct at wrong state!" << std::endl;
+                StackAllocator::Dealloc(m_stack);
+            }
         }
-        //destruct main Fiber
+        //destruct main Fiber in case outside distruct
         else {
-            if (t_fiber == getShared()) t_fiber = nullptr;
-            if (t_mainfiber == getShared()) t_mainfiber = nullptr;
+            t_fiber = nullptr;
         }
     }
 
@@ -77,7 +78,7 @@ public:
         else if ((m_state == INIT)){
             m_cb = cb;
             getcontext(&m_ctx);
-            m_ctx.uc_link = nullptr;
+            m_ctx.uc_link = &t_mainfiber->m_ctx;
         }
     };
 
@@ -95,8 +96,7 @@ public:
         swapcontext(&m_ctx, &t_mainfiber->m_ctx);
     };
 
-    static void SetThis(std::shared_ptr<Fiber> p){
-        if (t_fiber)
+    void Fiber::SetThis(std::shared_ptr<Fiber> p){
         t_fiber = p;
     };
 
@@ -121,7 +121,7 @@ public:
             t_fiber->m_state = HOLD;
             t_fiber->swapOut();
         }
-        else std::cerr << "Not in child fiber!" << std::endl;
+        else std::cerr << "YieldToHold: Not in child fiber!" << std::endl;
     };
 
     void Fiber::YieldToReady(){
@@ -129,7 +129,7 @@ public:
             t_fiber->m_state = READY;
             t_fiber->swapOut();
         }
-        else std::cerr << "Not in child fiber!" << std::endl;
+        else std::cerr << "YieldToReady: Not in child fiber!" << std::endl;
     };
 
     void Fiber::MainFunc(){
@@ -139,6 +139,6 @@ public:
             t_fiber->m_state = TERM;
             t_fiber->swapOut();
         }
-        else std::cerr << "Not in child fiber!" << std::endl;
+        else std::cerr << "MainFunc: Not in child fiber!" << std::endl;
     };
 }

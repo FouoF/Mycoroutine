@@ -12,7 +12,6 @@ Scheduler::Scheduler(size_t thread_num, bool use_caller, std::string name) : m_n
         m_mainfiber = mycoroutine::Fiber::GetThis();
         thread_num--;
         t_fiber = m_mainfiber;
-        t_scheduler = shared_from_this();
         m_rootThread = mycoroutine::GetThreadId();
         m_mainfiber->reset(std::bind(&Scheduler::run, this));
     }
@@ -34,6 +33,7 @@ std::shared_ptr<Fiber> Scheduler::GetMainFiber(){
 };
 
 void Scheduler::start(){
+    t_scheduler = shared_from_this();
     MutexLock lock(m_mutex);
     if (!m_stopping)
     return;
@@ -134,5 +134,15 @@ void Scheduler::run(){
             --m_idelThreadCount;
         }
 }
+}
+void Scheduler::tickle(){
+    return;
+}
+bool Scheduler::stopping(){
+    MutexLock lock(m_mutex);
+    return m_autoStop && m_stopping && m_fibers.empty();
+}
+void Scheduler::idel(){
+    return;
 }
 }

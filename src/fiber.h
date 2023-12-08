@@ -10,7 +10,7 @@
 
 namespace mycoroutine{
 
-class Fiber : std::enable_shared_from_this<Fiber>{
+class Fiber : public std::enable_shared_from_this<Fiber>{
 public:
     Fiber();
     ~Fiber();

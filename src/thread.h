@@ -166,7 +166,7 @@ public:
     static const std::string GetName();
     static Thread* GetThis();
     static void SetName(const std::string);
-    ~Thread();
+    ~Thread() = default;
 };
 }
 
