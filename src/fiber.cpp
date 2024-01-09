@@ -2,7 +2,7 @@
 
 namespace mycoroutine{
 
-static std::atomic_int64_t s_fiber_id(0);
+static std::atomic_int64_t s_fiber_id{0};
 //point to the main fiber
 static thread_local std::shared_ptr<Fiber> t_mainfiber = nullptr;
 //point to current fiber
@@ -117,7 +117,7 @@ public:
     };
 
     void Fiber::YieldToHold(){
-        if (t_fiber) {
+        if (t_fiber != t_mainfiber) {
             t_fiber->m_state = HOLD;
             t_fiber->swapOut();
         }

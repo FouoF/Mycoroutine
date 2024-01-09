@@ -8,6 +8,8 @@
 
 #include"thread.h"
 
+#define MINSTACKSIZE 1024 * 16
+
 namespace mycoroutine{
 
 class Fiber : public std::enable_shared_from_this<Fiber>{
@@ -23,7 +25,7 @@ public:
     };
     static std::shared_ptr<Fiber> MainInit();
 
-    static std::shared_ptr<Fiber> Create(std::function<void()> cb, size_t stacksize);
+    static std::shared_ptr<Fiber> Create(std::function<void()> cb, size_t stacksize = MINSTACKSIZE);
 
     Fiber(std::function<void()> cb, size_t stacksize);
     

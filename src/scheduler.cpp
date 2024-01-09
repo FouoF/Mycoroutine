@@ -58,7 +58,6 @@ void Scheduler::stop(){
             return; 
     }
     }
-//    bool exit_on_this_fiber = false;
     m_stopping = true;
     for (size_t i = 0; i < m_threadCount; i ++){
         tickle();
@@ -76,10 +75,11 @@ void Scheduler::run(){
         t_fiber = Fiber::GetThis();
     }
     FiberAndThread ft;
-    std::shared_ptr<Fiber> idel_fiber = Fiber::Create(std::bind(&Scheduler::idel, this), 4096);
-    //TODO:define default stacksize
-    std::shared_ptr<Fiber> cb_fiber = Fiber::Create(nullptr, 4096);
-    while(true){
+
+    std::shared_ptr<Fiber> idel_fiber = Fiber::Create(std::bind(&Scheduler::idel, this));
+    std::shared_ptr<Fiber> cb_fiber = Fiber::Create(nullptr);
+
+    while(!stopping()){
         bool need_tickle = false;
         ft.reset();
         {   
@@ -99,7 +99,9 @@ void Scheduler::run(){
                 m_fibers.erase(it);
             }
         }
+
         if (need_tickle) tickle();
+
         if (ft.fiber && ft.fiber->getState() != Fiber::TERM){
             ++m_activeThreadCount;
             ft.fiber->swapIn();
@@ -125,11 +127,14 @@ void Scheduler::run(){
             }
             cb_fiber->reset(nullptr);
         }
+        //no task to run, run idel, if idel terminated, 
+        //the scheduler terminate automatically
         else{
             ++m_idelThreadCount;
             idel_fiber->swapIn();
             if (idel_fiber->getState() == Fiber::TERM){
                 idel_fiber = nullptr;
+                break;
             }
             --m_idelThreadCount;
         }

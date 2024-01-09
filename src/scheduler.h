@@ -35,6 +35,10 @@ public:
 
     template<class InputItrator>
     void schedule(InputItrator begin, InputItrator end){
+        if m_stopping() {
+            std::cerr << "scheduler is stopping, cant schedule!" << endl;
+            return; 
+        } 
         bool need_tickle = false;
         MutexLock lock(m_mutex);
         while(begin != end){
