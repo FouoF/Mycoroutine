@@ -9,7 +9,9 @@ namespace mycoroutine{
     IOManager::IOManager(size_t thread_num, bool use_caller, std::string name)
     : Scheduler(thread_num, use_caller, name){
         m_epfd = epoll_create(5000);
-        pipe(m_tickleFds);
+        if (pipe(m_tickleFds) != 0){
+            std::cerr << "IOManager : pipe initiate error" << std::endl;
+        }
 
         epoll_event event;
         event.events = EPOLLIN | EPOLLET;
@@ -26,7 +28,7 @@ namespace mycoroutine{
         close(m_tickleFds[0]);
         close(m_tickleFds[1]);
 
-        for (int i = 0; i < m_fdContexts.size(); i++){
+        for (int i = 0; i < (int)m_fdContexts.size(); i++){
             if (m_fdContexts[i]){
                 delete m_fdContexts[i];
                 m_fdContexts[i] = nullptr;
@@ -34,7 +36,7 @@ namespace mycoroutine{
         }
     }
 
-    void IOManager::contextsResize(size_t size){
+    void IOManager::contextsResize(int size){
         m_fdContexts.resize(size);
         for (int i = 0; i < size; ++ i){
             if (!m_fdContexts[i]){
@@ -46,7 +48,7 @@ namespace mycoroutine{
     int IOManager::addEvent(int fd, Event event, std::function<void()> cb){
         FdContext * fd_ctx = nullptr;
         ReadLock lock(m_mutex);
-        if (m_fdContexts.size() > fd){
+        if ((int)m_fdContexts.size() > fd){
             fd_ctx = m_fdContexts[fd];
             lock.unlock();
         }
@@ -55,7 +57,7 @@ namespace mycoroutine{
             WrLock lock(m_mutex);
             contextsResize(m_fdContexts.size() * 2);
 
-            if (m_fdContexts.size() <= fd){
+            if ((int)m_fdContexts.size() <= fd){
                 std::cerr << "addEvent:bad fd" << std::endl;
                 return -1;
             }
@@ -84,11 +86,11 @@ namespace mycoroutine{
 
     bool IOManager::deleteEvent(int fd, Event event){
         ReadLock lock(m_mutex);
-        if (fd >= m_fdContexts.size()) return false;
+        if (fd >= (int)m_fdContexts.size()) return false;
         FdContext* fd_ctx = m_fdContexts[fd];
         lock.unlock();
         WrLock lock2(m_mutex);
-        if (fd_ctx->m_events & event != 0){
+        if ((fd_ctx->m_events & event) != 0){
             return false;
         }
         Event new_event = (Event)(fd_ctx->m_events & ~event);
@@ -105,11 +107,11 @@ namespace mycoroutine{
 
     bool IOManager::cancelEvent(int fd, Event event){
         ReadLock lock(m_mutex);
-        if (fd >= m_fdContexts.size()) return false;
+        if (fd >= (int)m_fdContexts.size()) return false;
         FdContext* fd_ctx = m_fdContexts[fd];
         lock.unlock();
         WrLock lock2(m_mutex);
-        if (fd_ctx->m_events & event != 0){
+        if ((fd_ctx->m_events & event) != 0){
             return false;
         }
         Event new_event = (Event)(fd_ctx->m_events & ~event);
@@ -125,7 +127,7 @@ namespace mycoroutine{
 
     bool IOManager::cancelAll(int fd){
         ReadLock lock(m_mutex);
-        if (fd >= m_fdContexts.size()) return false;
+        if (fd >= (int)m_fdContexts.size()) return false;
         FdContext* fd_ctx = m_fdContexts[fd];
         lock.unlock();
         WrLock lock2(m_mutex);
@@ -145,7 +147,8 @@ namespace mycoroutine{
         if (!m_idelThreadCount){
             return;
         }
-        write(m_tickleFds[1], "T", 1);
+        int rt = write(m_tickleFds[1], "T", 1);
+        if (rt != -1) return;
     };
 
     bool IOManager::stopping(){

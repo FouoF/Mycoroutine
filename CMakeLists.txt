@@ -15,6 +15,7 @@ set(LIB_SRC
     src/fiber.cpp
     src/thread.cpp
     src/scheduler.cpp
+    src/IOmanager.cpp
 )
 
 add_library(mycoroutine SHARED ${LIB_SRC})
@@ -40,6 +41,10 @@ target_link_libraries(test_fiber mycoroutine ${LIBS})
 add_executable(test_scheduler tests/test_scheduler.cpp)
 add_dependencies(test_scheduler mycoroutine)
 target_link_libraries(test_scheduler mycoroutine ${LIBS})
+
+add_executable(test_IOmanager tests/test_IOmanager.cpp)
+add_dependencies(test_IOmanager mycoroutine)
+target_link_libraries(test_IOmanager mycoroutine ${LIBS})
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)

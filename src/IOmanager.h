@@ -33,13 +33,14 @@ private:
         };
         EventContext& getContext(Event event){
             if (event == READ) return readEvent;
-            if (event == WRITE) return writeEvent;
+            return writeEvent;
         };
         void resetContext(Event event){
             if (event == READ) 
                 reset(readEvent);
             else if 
-                (event = WRITE) reset(writeEvent);
+                (event == WRITE)
+                 reset(writeEvent);
             else {
                 reset(readEvent);
                 reset(writeEvent);
@@ -66,7 +67,6 @@ private:
         int fd = 0;
         Event m_events = NONE;
     };
-    int m_epfd;
 public:
     IOManager(size_t thread_num = 1, bool use_caller = true, std::string name = "DEFAULT"); 
     ~IOManager() override;
@@ -82,7 +82,7 @@ protected:
     void tickle() override;
     bool stopping() override;
     void idel() override;
-    void contextsResize(size_t size);
+    void contextsResize(int size);
 private:
     int m_epfd = 0;
     int m_tickleFds[2];

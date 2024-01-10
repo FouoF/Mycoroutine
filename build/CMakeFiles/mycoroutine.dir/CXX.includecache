@@ -6,9 +6,19 @@
 
 #IncludeRegexTransform: 
 
-/home/poff/Desktop/Mycoroutine/src/fiber.cpp
-fiber.h
-/home/poff/Desktop/Mycoroutine/src/fiber.h
+/home/poff/Desktop/Mycoroutine/src/IOmanager.cpp
+IOmanager.h
+/home/poff/Desktop/Mycoroutine/src/IOmanager.h
+sys/epoll.h
+-
+unistd.h
+-
+fcntl.h
+-
+
+/home/poff/Desktop/Mycoroutine/src/IOmanager.h
+scheduler.h
+/home/poff/Desktop/Mycoroutine/src/scheduler.h
 
 /home/poff/Desktop/Mycoroutine/src/fiber.h
 ucontext.h
@@ -41,12 +51,6 @@ thread.h
 /home/poff/Desktop/Mycoroutine/src/thread.h
 fiber.h
 /home/poff/Desktop/Mycoroutine/src/fiber.h
-
-/home/poff/Desktop/Mycoroutine/src/thread.cpp
-thread.h
-/home/poff/Desktop/Mycoroutine/src/thread.h
-util.h
-/home/poff/Desktop/Mycoroutine/src/util.h
 
 /home/poff/Desktop/Mycoroutine/src/thread.h
 thread

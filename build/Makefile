@@ -114,6 +114,19 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named test_IOmanager
+
+# Build rule for target.
+test_IOmanager: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_IOmanager
+.PHONY : test_IOmanager
+
+# fast build rule for target.
+test_IOmanager/fast:
+	$(MAKE) -f CMakeFiles/test_IOmanager.dir/build.make CMakeFiles/test_IOmanager.dir/build
+.PHONY : test_IOmanager/fast
+
+#=============================================================================
 # Target rules for targets named test_fiber
 
 # Build rule for target.
@@ -177,6 +190,33 @@ mycoroutine: cmake_check_build_system
 mycoroutine/fast:
 	$(MAKE) -f CMakeFiles/mycoroutine.dir/build.make CMakeFiles/mycoroutine.dir/build
 .PHONY : mycoroutine/fast
+
+src/IOmanager.o: src/IOmanager.cpp.o
+
+.PHONY : src/IOmanager.o
+
+# target to build an object file
+src/IOmanager.cpp.o:
+	$(MAKE) -f CMakeFiles/mycoroutine.dir/build.make CMakeFiles/mycoroutine.dir/src/IOmanager.cpp.o
+.PHONY : src/IOmanager.cpp.o
+
+src/IOmanager.i: src/IOmanager.cpp.i
+
+.PHONY : src/IOmanager.i
+
+# target to preprocess a source file
+src/IOmanager.cpp.i:
+	$(MAKE) -f CMakeFiles/mycoroutine.dir/build.make CMakeFiles/mycoroutine.dir/src/IOmanager.cpp.i
+.PHONY : src/IOmanager.cpp.i
+
+src/IOmanager.s: src/IOmanager.cpp.s
+
+.PHONY : src/IOmanager.s
+
+# target to generate assembly for a file
+src/IOmanager.cpp.s:
+	$(MAKE) -f CMakeFiles/mycoroutine.dir/build.make CMakeFiles/mycoroutine.dir/src/IOmanager.cpp.s
+.PHONY : src/IOmanager.cpp.s
 
 src/fiber.o: src/fiber.cpp.o
 
@@ -286,6 +326,33 @@ tests/test.cpp.s:
 	$(MAKE) -f CMakeFiles/test.dir/build.make CMakeFiles/test.dir/tests/test.cpp.s
 .PHONY : tests/test.cpp.s
 
+tests/test_IOmanager.o: tests/test_IOmanager.cpp.o
+
+.PHONY : tests/test_IOmanager.o
+
+# target to build an object file
+tests/test_IOmanager.cpp.o:
+	$(MAKE) -f CMakeFiles/test_IOmanager.dir/build.make CMakeFiles/test_IOmanager.dir/tests/test_IOmanager.cpp.o
+.PHONY : tests/test_IOmanager.cpp.o
+
+tests/test_IOmanager.i: tests/test_IOmanager.cpp.i
+
+.PHONY : tests/test_IOmanager.i
+
+# target to preprocess a source file
+tests/test_IOmanager.cpp.i:
+	$(MAKE) -f CMakeFiles/test_IOmanager.dir/build.make CMakeFiles/test_IOmanager.dir/tests/test_IOmanager.cpp.i
+.PHONY : tests/test_IOmanager.cpp.i
+
+tests/test_IOmanager.s: tests/test_IOmanager.cpp.s
+
+.PHONY : tests/test_IOmanager.s
+
+# target to generate assembly for a file
+tests/test_IOmanager.cpp.s:
+	$(MAKE) -f CMakeFiles/test_IOmanager.dir/build.make CMakeFiles/test_IOmanager.dir/tests/test_IOmanager.cpp.s
+.PHONY : tests/test_IOmanager.cpp.s
+
 tests/test_fiber.o: tests/test_fiber.cpp.o
 
 .PHONY : tests/test_fiber.o
@@ -374,12 +441,16 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
+	@echo "... test_IOmanager"
 	@echo "... test_fiber"
 	@echo "... edit_cache"
 	@echo "... test_thread"
 	@echo "... test"
 	@echo "... test_scheduler"
 	@echo "... mycoroutine"
+	@echo "... src/IOmanager.o"
+	@echo "... src/IOmanager.i"
+	@echo "... src/IOmanager.s"
 	@echo "... src/fiber.o"
 	@echo "... src/fiber.i"
 	@echo "... src/fiber.s"
@@ -392,6 +463,9 @@ help:
 	@echo "... tests/test.o"
 	@echo "... tests/test.i"
 	@echo "... tests/test.s"
+	@echo "... tests/test_IOmanager.o"
+	@echo "... tests/test_IOmanager.i"
+	@echo "... tests/test_IOmanager.s"
 	@echo "... tests/test_fiber.o"
 	@echo "... tests/test_fiber.i"
 	@echo "... tests/test_fiber.s"

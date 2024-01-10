@@ -18,7 +18,8 @@
 						1,
 						2,
 						3,
-						4
+						4,
+						5
 					]
 				}
 			],
@@ -37,7 +38,8 @@
 						1,
 						2,
 						3,
-						4
+						4,
+						5
 					]
 				}
 			],
@@ -46,35 +48,42 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "mycoroutine::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-mycoroutine-Debug-fca67aae5c606c9e3392.json",
+					"jsonFile" : "target-mycoroutine-Debug-7bb065b4aba3b0ff2ec7.json",
 					"name" : "mycoroutine",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "test::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test-Debug-6c1f5974daf442e96c76.json",
+					"jsonFile" : "target-test-Debug-ba0584edc74b93f6ca94.json",
 					"name" : "test",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
+					"id" : "test_IOmanager::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-test_IOmanager-Debug-0b7b432b35de10a3bbbd.json",
+					"name" : "test_IOmanager",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
 					"id" : "test_fiber::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test_fiber-Debug-5fbaf2d72f8217dae39c.json",
+					"jsonFile" : "target-test_fiber-Debug-8a320bb0888f38a3bb12.json",
 					"name" : "test_fiber",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "test_scheduler::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test_scheduler-Debug-5c59853c8ce6d32d35f7.json",
+					"jsonFile" : "target-test_scheduler-Debug-19ade3df4033f062425a.json",
 					"name" : "test_scheduler",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 0,
 					"id" : "test_thread::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-test_thread-Debug-f98d505c741ab2afe0d4.json",
+					"jsonFile" : "target-test_thread-Debug-dc830adac23364d904cc.json",
 					"name" : "test_thread",
 					"projectIndex" : 0
 				}

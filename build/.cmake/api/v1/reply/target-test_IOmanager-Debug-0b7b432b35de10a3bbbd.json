@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/home/poff/Desktop/Mycoroutine/bin/test_fiber"
+			"path" : "/home/poff/Desktop/Mycoroutine/bin/test_IOmanager"
 		}
 	],
 	"backtrace" : 1,
@@ -28,7 +28,7 @@
 			{
 				"command" : 0,
 				"file" : 0,
-				"line" : 36,
+				"line" : 45,
 				"parent" : 0
 			},
 			{
@@ -40,13 +40,13 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 38,
+				"line" : 47,
 				"parent" : 0
 			},
 			{
 				"command" : 3,
 				"file" : 0,
-				"line" : 37,
+				"line" : 46,
 				"parent" : 0
 			},
 			{
@@ -97,7 +97,7 @@
 			"id" : "mycoroutine::@6890427a1f51a3e7e1df"
 		}
 	],
-	"id" : "test_fiber::@6890427a1f51a3e7e1df",
+	"id" : "test_IOmanager::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
@@ -131,8 +131,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "test_fiber",
-	"nameOnDisk" : "test_fiber",
+	"name" : "test_IOmanager",
+	"nameOnDisk" : "test_IOmanager",
 	"paths" : 
 	{
 		"build" : ".",
@@ -153,7 +153,7 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "tests/test_fiber.cpp",
+			"path" : "tests/test_IOmanager.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

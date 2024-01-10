@@ -34,15 +34,15 @@ public:
     };
 
     template<class InputItrator>
-    void schedule(InputItrator begin, InputItrator end){
-        if m_stopping() {
-            std::cerr << "scheduler is stopping, cant schedule!" << endl;
+    void schedule(InputItrator begin, InputItrator end, int thread = -1){
+        if (m_stopping) {
+            std::cerr << "scheduler is stopping, cant schedule!" << std::endl;
             return; 
         } 
         bool need_tickle = false;
         MutexLock lock(m_mutex);
         while(begin != end){
-            need_tickle = scheduleNolock(*begin) || need_tickle;
+            need_tickle = scheduleNolock(*begin, thread) || need_tickle;
             begin ++;
         }
         if (need_tickle) tickle();
@@ -58,7 +58,7 @@ private:
         bool need_tickle = m_fibers.empty();
         FiberAndThread ft(fc, thread);
         if (ft.cb || ft.fiber){
-            m_fibers.push_back(ft);            
+            m_fibers.push_back(ft);         
         }
         return need_tickle;
     };
@@ -67,8 +67,9 @@ private:
         std::shared_ptr<Fiber> fiber;
         std::function<void()> cb;
         int thread;
-        FiberAndThread(std::function<void()> f, int thr) : cb(f), thread(thr){};
+        FiberAndThread(std::function<void()> *f, int thr) : cb(*f), thread(thr){};
         FiberAndThread(std::shared_ptr<Fiber> f, int thr) : fiber(f), thread(thr){};
+        FiberAndThread(std::shared_ptr<Fiber> *f, int thr) : fiber(*f), thread(thr){};
         FiberAndThread():thread(-1){};
         void reset(){
             fiber = nullptr;

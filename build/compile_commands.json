@@ -1,6 +1,11 @@
 [
 {
   "directory": "/home/poff/Desktop/Mycoroutine/build",
+  "command": "/usr/bin/c++   -I/home/poff/Desktop/Mycoroutine/. -I/home/poff/Desktop/Mycoroutine/src   -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function -g   -o CMakeFiles/test_IOmanager.dir/tests/test_IOmanager.cpp.o -c /home/poff/Desktop/Mycoroutine/tests/test_IOmanager.cpp",
+  "file": "/home/poff/Desktop/Mycoroutine/tests/test_IOmanager.cpp"
+},
+{
+  "directory": "/home/poff/Desktop/Mycoroutine/build",
   "command": "/usr/bin/c++   -I/home/poff/Desktop/Mycoroutine/. -I/home/poff/Desktop/Mycoroutine/src   -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function -g   -o CMakeFiles/test_fiber.dir/tests/test_fiber.cpp.o -c /home/poff/Desktop/Mycoroutine/tests/test_fiber.cpp",
   "file": "/home/poff/Desktop/Mycoroutine/tests/test_fiber.cpp"
 },
@@ -33,5 +38,10 @@
   "directory": "/home/poff/Desktop/Mycoroutine/build",
   "command": "/usr/bin/c++  -Dmycoroutine_EXPORTS -I/home/poff/Desktop/Mycoroutine/. -I/home/poff/Desktop/Mycoroutine/src   -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function -g -fPIC   -o CMakeFiles/mycoroutine.dir/src/scheduler.cpp.o -c /home/poff/Desktop/Mycoroutine/src/scheduler.cpp",
   "file": "/home/poff/Desktop/Mycoroutine/src/scheduler.cpp"
+},
+{
+  "directory": "/home/poff/Desktop/Mycoroutine/build",
+  "command": "/usr/bin/c++  -Dmycoroutine_EXPORTS -I/home/poff/Desktop/Mycoroutine/. -I/home/poff/Desktop/Mycoroutine/src   -rdynamic -O3 -g -std=c++17 -Wall -Wno-deprecated -Werror -Wno-unused-function -g -fPIC   -o CMakeFiles/mycoroutine.dir/src/IOmanager.cpp.o -c /home/poff/Desktop/Mycoroutine/src/IOmanager.cpp",
+  "file": "/home/poff/Desktop/Mycoroutine/src/IOmanager.cpp"
 }
 ]
