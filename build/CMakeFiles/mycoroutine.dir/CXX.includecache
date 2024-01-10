@@ -34,12 +34,6 @@ thread.h
 
 /home/poff/Desktop/Mycoroutine/src/noncopyable.h
 
-/home/poff/Desktop/Mycoroutine/src/scheduler.cpp
-scheduler.h
-/home/poff/Desktop/Mycoroutine/src/scheduler.h
-util.h
-/home/poff/Desktop/Mycoroutine/src/util.h
-
 /home/poff/Desktop/Mycoroutine/src/scheduler.h
 memory
 -
@@ -67,12 +61,4 @@ semaphore.h
 -
 noncopyable.h
 /home/poff/Desktop/Mycoroutine/src/noncopyable.h
-
-/home/poff/Desktop/Mycoroutine/src/util.h
-sys/unistd.h
--
-syscall.h
--
-fiber.h
-/home/poff/Desktop/Mycoroutine/src/fiber.h
 

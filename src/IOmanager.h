@@ -8,7 +8,7 @@ public:
     enum Event{
         NONE  = 0x0,
         READ  = 0x1,
-        WRITE = 0x2,
+        WRITE = 0x4,
     };
 private:
     struct FdContext{
