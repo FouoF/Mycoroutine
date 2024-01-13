@@ -7,7 +7,7 @@
 namespace mycoroutine{
 
     IOManager::IOManager(size_t thread_num, bool use_caller, std::string name)
-    : Scheduler(thread_num, use_caller, name){
+    : Scheduler(thread_num, name){
         m_epfd = epoll_create(5000);
         if (pipe(m_tickleFds) != 0){
             std::cerr << "IOManager : pipe initiate error" << std::endl;

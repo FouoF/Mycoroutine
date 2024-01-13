@@ -7,17 +7,12 @@ static thread_local std::shared_ptr<Scheduler> t_scheduler = nullptr;
 //the main fiber executing the scheduler
 static thread_local std::shared_ptr<Fiber> t_fiber = nullptr;
 
-Scheduler::Scheduler(size_t thread_num, bool use_caller, std::string name) : m_name(name){
-    if (use_caller){
-        m_mainfiber = mycoroutine::Fiber::GetThis();
-        thread_num--;
-        t_fiber = m_mainfiber;
-        m_rootThread = mycoroutine::GetThreadId();
-        m_mainfiber->reset(std::bind(&Scheduler::run, this));
-    }
-    else {
-        m_rootThread = -1;
-    }
+Scheduler::Scheduler(size_t thread_num, std::string name) : m_name(name){
+    m_mainfiber = mycoroutine::Fiber::MainInit();
+    thread_num--;
+    t_fiber = m_mainfiber;
+    m_rootThread = mycoroutine::GetThreadId();
+    m_mainfiber->reset(std::bind(&Scheduler::run, this));
     m_threadCount = thread_num;
 }; 
 Scheduler::~Scheduler(){
@@ -48,8 +43,8 @@ void Scheduler::start(){
 
 //elegant stop
 void Scheduler::stop(){
+    //mark the scheduler is ready to stop
     m_autoStop = true;
-    //the scheduler is ready to stop
     if (m_mainfiber && m_threadCount == 0 
     && (m_mainfiber->getState() == Fiber::TERM 
     || m_mainfiber->getState() == Fiber::INIT)){
