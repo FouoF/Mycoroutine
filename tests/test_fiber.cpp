@@ -1,18 +1,15 @@
 #include"src/mycoroutine.h"
 
 void thisschduler(){
+    int c = 0;
     while(1){
-        std::cout << "scheduling..." << std::endl;
-        std::cout << mycoroutine::GetFiberId() << std::endl;
-        sleep(5);
+        std::cout << "scheduling... : " << c++ << std::endl;
     }
 }
 
 void cb(){
     for (int i = 0; i < 3; i ++){
         std::cout << "something..." <<std::endl;
-        std::cout << mycoroutine::GetFiberId() <<std::endl;
-        sleep(5);
     }
     mycoroutine::Fiber::YieldToHold();
 };
@@ -23,6 +20,5 @@ int main (){
     mainfiber->reset(&thisschduler);
     std::shared_ptr<mycoroutine::Fiber> fiber = mycoroutine::Fiber::Create(&cb, 16 * 1024);
     fiber->swapIn();
-    cout << mycoroutine::GetFiberId() << endl;
     return 0;
 }
